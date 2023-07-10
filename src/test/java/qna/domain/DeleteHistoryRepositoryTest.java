@@ -2,6 +2,8 @@ package qna.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static qna.domain.UserTest.JAVAJIGI;
+import static qna.domain.UserTest.SANJIGI;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,7 +21,7 @@ class DeleteHistoryRepositoryTest {
     @Test
     void save() {
         // given
-        DeleteHistory deleteHistory = new DeleteHistory(ContentType.QUESTION, 1L, 1L, LocalDateTime.now());
+        DeleteHistory deleteHistory = new DeleteHistory(ContentType.QUESTION, 1L, JAVAJIGI, LocalDateTime.now());
 
         // when
         DeleteHistory savedDeleteHistory = deleteHistoryRepository.save(deleteHistory);
@@ -29,15 +31,15 @@ class DeleteHistoryRepositoryTest {
                 () -> assertThat(savedDeleteHistory).isNotNull(),
                 () -> assertThat(savedDeleteHistory.getContentType()).isEqualTo(ContentType.QUESTION),
                 () -> assertThat(savedDeleteHistory.getContentId()).isEqualTo(1L),
-                () -> assertThat(savedDeleteHistory.getDeletedById()).isEqualTo(1L)
+                () -> assertThat(savedDeleteHistory.getDeletedBy()).isEqualTo(1L)
         );
     }
 
     @Test
     void findAll() {
         // given
-        DeleteHistory deleteHistory1 = new DeleteHistory(ContentType.QUESTION, 1L, 1L, LocalDateTime.now());
-        DeleteHistory deleteHistory2 = new DeleteHistory(ContentType.ANSWER, 2L, 2L, LocalDateTime.now());
+        DeleteHistory deleteHistory1 = new DeleteHistory(ContentType.QUESTION, 1L, JAVAJIGI, LocalDateTime.now());
+        DeleteHistory deleteHistory2 = new DeleteHistory(ContentType.ANSWER, 2L, SANJIGI, LocalDateTime.now());
 
         deleteHistoryRepository.save(deleteHistory1);
         deleteHistoryRepository.save(deleteHistory2);
@@ -56,7 +58,8 @@ class DeleteHistoryRepositoryTest {
     @Test
     void delete() {
         // given
-        DeleteHistory deleteHistory = new DeleteHistory(ContentType.QUESTION, 1L, 1L, LocalDateTime.now());
+        DeleteHistory deleteHistory = new DeleteHistory(ContentType.QUESTION, 1L, JAVAJIGI, LocalDateTime.now());
+        System.out.println(deleteHistory);
         deleteHistoryRepository.save(deleteHistory);
 
         // when
